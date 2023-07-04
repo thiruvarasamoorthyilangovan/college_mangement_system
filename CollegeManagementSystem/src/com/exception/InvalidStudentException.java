@@ -1,5 +1,10 @@
 package com.exception;
 
-public class InvalidStudentException {
+public class InvalidStudentException extends Exception {
+	
+	public InvalidStudentException(String message) {
+		super(message);
+	}
 
 }
+
