@@ -1,7 +1,6 @@
 package com.service;
 import com.model.Student;
 import java.util.List;
-import java.sql.Date;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -23,38 +22,40 @@ public class StudentService {
     	return studentDetailList;
 	}
 
-    public boolean addStudent(String... studentDetails){
+    public int addStudent(String... studentDetails){
     	
     	StudentManagement obj= new StudentManagement();
     	int result = obj.insertStudentDetails(buildStudentList(ApplicationUtil.extractStudentDetails(studentDetails))); 
-    	if(result<=0) {
-    		return false;
-    	}else {
-    		return true;
-    	}
+    	return result;
     }
     
     public String generateStudentId() {
     	
-    	return null;
+    	return "studentId";
     }
-    public boolean modifyStudent(String studentId) {
+    public boolean modifyStudent(String studentId, String studentName) {
     	
-    	return false;
+    	StudentManagement obj=new StudentManagement();
+    	int n=obj.updateStudentDetails(studentId, studentName);
+    	return (n>0);
     }
     
     public boolean deleteStudent(String studentId) {
     	
-    	return false;
+    	StudentManagement obj=new StudentManagement();
+    	int n = obj.deleteStudentDetails(studentId);
+    	return (n<0);
     }
     
     public List<Student> fetchStudentDetails(String studentId){
     	
     	List<Student> studentDetailList = new ArrayList<Student>();
+    	StudentManagement obj=new StudentManagement();
+    	studentDetailList = obj.selectStudentDetails();
     	return studentDetailList;
     }
     
-public static java.util.Date stringToDateConverter(String stringDate) {
+    public static java.util.Date stringToDateConverter(String stringDate) {
 		
 		java.util.Date date = null;
 		SimpleDateFormat df=new SimpleDateFormat("yyyy-MM-dd",java.util.Locale.getDefault());
@@ -85,6 +86,4 @@ public static java.util.Date stringToDateConverter(String stringDate) {
 			}
 			return utDate;
 	}
-
 }
-
