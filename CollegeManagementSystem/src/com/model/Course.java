@@ -47,6 +47,11 @@ public class Course {
 	public double getCourseFee() {
 		return courseFee;
 	}
+	@Override
+	public String toString() {
+		return "Course \ncourseName=" + courseName + "\ncourseCoordinator=" + courseCoordinator + "\ndepartment="
+				+ department + "\ncourseFee=" + courseFee + "\ncourseId=" + courseId + "";
+	}
 	public void setCourseFee(double courseFee) {
 		this.courseFee = courseFee;
 	}
