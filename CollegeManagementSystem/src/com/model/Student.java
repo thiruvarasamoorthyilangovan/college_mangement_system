@@ -101,5 +101,13 @@ public class Student {
 	public Student() {
 		super();
 	}
+	@Override
+	public String toString() {
+		return "Student [admissionNumber=" + admissionNumber + "\n studentId=" + studentId + "\n studentName="
+				+ studentName + "\n dob=" + dob + "\n yearOfStudy=" + yearOfStudy + "\n yearOfJoining=" + yearOfJoining
+				+ "\n tenthGradeMark=" + tenthGradeMark + "\n twelthGradeMark=" + twelthGradeMark + "\n firstGraduate="
+				+ firstGraduate + "\n emailId=" + emailId + "\n phoneNumber=" + phoneNumber + "]";
+	}
+	
 
 }
