@@ -8,14 +8,13 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 public class StudentManagement {
 	
-	public int insertStudentDetails(List<Student> studentDetails) {
+	public List<Student> insertStudentDetails(List<Student> studentDetails) {
 		
-		int recordsAdded = 0;
 		Connection con = null;
-		try{
-		    con = DBconnectionManager.getConnection();
-		    PreparedStatement pst = con.prepareStatement("INSERT INTO Student VALUES(?,?,?,?,?,?,?,?,?,?,?)");
 		    for(Student i:studentDetails){
+		    	try{
+		    	con = DBconnectionManager.getConnection();
+				PreparedStatement pst = con.prepareStatement("INSERT INTO Student VALUES(?,?,?,?,?,?,?,?,?,?,?)");
 		        pst.setString(1,i.getAdmissionNumber());
 		        pst.setString(2,i.getStudentId());
 		        pst.setString(3,i.getStudentName());
@@ -27,15 +26,18 @@ public class StudentManagement {
 		        pst.setString(9,i.getFirstGraduate());
 		        pst.setString(10,i.getEmailId());
 		        pst.setLong(11,i.getPhoneNumber());
-		        recordsAdded = recordsAdded+pst.executeUpdate();		        
+		        pst.executeUpdate();		        	
 		    }
-		}
 		catch(SQLException e){
-			return 0;
+			System.out.println(i.getStudentName()+"'s records are not added successfully!!!\nBecause of "+e.getMessage());
+			studentDetails.remove(i);
+			return studentDetails;
 		    }
 		catch (ClassNotFoundException e) {
-		    return 0;			
+			System.out.println(e.getMessage());
+			return studentDetails;			
 		    }
+		    
 		finally{
 			try{
 				con.close();
@@ -44,28 +46,30 @@ public class StudentManagement {
 		        		
 			}
 		}
-		return recordsAdded;
+		    }
+		return studentDetails;
 	}
 	
-	public int updateStudentDetails(String studentId, String studentName) {
+	public int updateStudentDetails(String updateColumn, String updateValue, String referenceColumn, String referenceValue) {
 
 		int rowsAffected = 0;
 		try{
             Connection con = DBconnectionManager.getConnection();
-            PreparedStatement pst = con.prepareStatement("update Student set Student_Name = ? where student_Id = ?");
-            pst.setString(2,studentId);
-            pst.setString(1,studentName);
+            PreparedStatement pst = con.prepareStatement("update Student set ?? = ? where ?? = ?");
+            pst.setString(1,updateColumn);
+            pst.setString(2,updateValue);
+            pst.setString(3,referenceColumn);
+            pst.setString(4,referenceValue);
             rowsAffected = pst.executeUpdate();
             con.close();
-            System.out.println(rowsAffected);
             return rowsAffected;
             
         }
         catch(SQLException e){
-            e.printStackTrace();
+        	System.out.println(e.getMessage());
         }
         catch(ClassNotFoundException e){
-        	e.printStackTrace();
+        	System.out.println(e.getMessage());
         }
 		return 0;
 	}
@@ -80,9 +84,9 @@ public class StudentManagement {
             con.close();
             return rowsAffected;
         }catch(ClassNotFoundException e){
-            e.printStackTrace();
+        	System.out.println(e.getMessage());
         }catch(SQLException e){
-            e.printStackTrace();
+        	System.out.println(e.getMessage());
         }
 		return 0;
 	}
@@ -101,9 +105,9 @@ public class StudentManagement {
         con.close();
         return list;
         }catch(SQLException e){
-            return list;
+        	return list;
         }catch(ClassNotFoundException e){
-            return list;
+        	return list;
         }
 	}
 
