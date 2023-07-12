@@ -8,7 +8,7 @@ import com.util.ApplicationUtil;
 
 public class CourseService {
 	
-public List<Course> buildCourseList(List<String> courseDetails){
+	public List<Course> buildCourseList(List<String> courseDetails){
 		
 		List<Course> courseDetailList = new ArrayList<Course>();
 		String DELIMETER = ":";
