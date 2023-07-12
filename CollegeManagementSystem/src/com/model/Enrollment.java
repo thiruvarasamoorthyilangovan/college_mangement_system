@@ -48,6 +48,13 @@ public class Enrollment {
 	}
 
 
+	@Override
+	public String toString() {
+		return "Enrollment EnrollmentId = " + enrollmentId + "\n Student Id = " + studentId + "\n Course Id = " + courseId
+				+ "\n Fee Status = " + feeStatus;
+	}
+
+
 	public void setFeeStatus(String feeStatus) {
 		this.feeStatus = feeStatus;
 	}
