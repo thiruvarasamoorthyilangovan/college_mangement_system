@@ -9,34 +9,46 @@ import com.util.ApplicationUtil;
 
 public class StudentService {
 	
+	static int studentCount = 000;
+	
 	public List<Student> buildStudentList(List<String> studentDetails){
 		
 		List<Student> studentDetailList = new ArrayList<Student>();
+		Student obj = new Student();
 		for(String i:studentDetails) {
 			String arr[]=i.split(":");
-			Student obj=new Student(arr[0], generateStudentId(), arr[1], utilToSqlDateConverter(stringToDateConverter(arr[2])), Integer.parseInt(arr[3]),
+			try {
+			obj=new Student(arr[0], generateStudentId(arr[1], arr[2]), arr[1], utilToSqlDateConverter(stringToDateConverter(arr[2])), Integer.parseInt(arr[3]),
 			Integer.parseInt(arr[4]), Integer.parseInt(arr[5]), Integer.parseInt(arr[6]), arr[7], arr[8],
 			Long.parseLong(arr[9]));
 			studentDetailList.add(obj);
+			}catch(Exception e) {
+				System.out.println(arr[1]+" Details are not in the correct format!!!");
+				
+			}
+			
 		}
     	return studentDetailList;
 	}
 
-    public int addStudent(String... studentDetails){
+    public List<Student> addStudent(String... studentDetails){
     	
     	StudentManagement obj= new StudentManagement();
-    	int result = obj.insertStudentDetails(buildStudentList(ApplicationUtil.extractStudentDetails(studentDetails))); 
-    	return result;
+    	List<Student> studentDetailList =obj.insertStudentDetails((buildStudentList(ApplicationUtil.extractStudentDetails(studentDetails)))); 
+    	return studentDetailList;
+    	
     }
     
-    public String generateStudentId() {
+    public static String generateStudentId(String name, String date) {
     	
-    	return "studentId";
+    	studentCount++;
+    	String studentId = "SI"+date.substring(6)+""+(name.substring(0, 3)).toUpperCase()+"00"+studentCount; 
+    	return studentId;
     }
-    public boolean modifyStudent(String studentId, String studentName) {
+    public boolean modifyStudent(String updateColumn, String updateValue, String referenceColumn, String referenceValue) {
     	
     	StudentManagement obj=new StudentManagement();
-    	int n=obj.updateStudentDetails(studentId, studentName);
+    	int n=obj.updateStudentDetails(updateColumn, updateValue, referenceColumn, referenceValue);
     	return (n>0);
     }
     
@@ -44,7 +56,7 @@ public class StudentService {
     	
     	StudentManagement obj=new StudentManagement();
     	int n = obj.deleteStudentDetails(studentId);
-    	return (n<0);
+    	return (n>0);
     }
     
     public List<Student> fetchStudentDetails(String studentId){
