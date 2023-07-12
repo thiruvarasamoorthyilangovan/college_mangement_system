@@ -51,6 +51,10 @@ public class Payment {
 	public void setAmount(double amount) {
 		this.amount = amount;
 	}
-	
+	@Override
+	public String toString() {
+		return "Payment \n PaymentId=" + paymentId + "\n Enrollment Id = " + enrollmentId + "\n PaymentDate = " + paymentDate
+				+ "\n Payment Mode = " + paymentMode + "\n Amount = " + amount;
+	}
 
 }
