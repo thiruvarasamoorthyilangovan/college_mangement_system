@@ -49,8 +49,8 @@ public class Course {
 	}
 	@Override
 	public String toString() {
-		return "Course \ncourseName=" + courseName + "\ncourseCoordinator=" + courseCoordinator + "\ndepartment="
-				+ department + "\ncourseFee=" + courseFee + "\ncourseId=" + courseId + "";
+		return "Course \nCourse Name = " + courseName + "\nCourse Coordinator = " + courseCoordinator + "\nDepartment = "
+				+ department + "\nCourseFee = " + courseFee + "\nCourse Id = " + courseId;
 	}
 	public void setCourseFee(double courseFee) {
 		this.courseFee = courseFee;
