@@ -1,78 +1,114 @@
-package com.model;
+package com.management;
+import com.model.Student;
+import java.util.List;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+public class StudentManagement {
+	
+	public List<Student> insertStudentDetails(List<Student> studentDetails) {
+		
+		Connection con = null;
+		    for(Student i:studentDetails){
+		    	try{
+		    	con = DBconnectionManager.getConnection();
+				PreparedStatement pst = con.prepareStatement("INSERT INTO Student VALUES(?,?,?,?,?,?,?,?,?,?,?)");
+		        pst.setString(1,i.getAdmissionNumber());
+		        pst.setString(2,i.getStudentId());
+		        pst.setString(3,i.getStudentName());
+		        pst.setDate(4,i.getDob());
+		        pst.setInt(5,i.getYearOfStudy());
+		        pst.setInt(6,i.getYearOfJoining());
+		        pst.setDouble(7,i.getTenthGradeMark());
+		        pst.setInt(8,i.getTwelthGradeMark());
+		        pst.setString(9,i.getFirstGraduate());
+		        pst.setString(10,i.getEmailId());
+		        pst.setLong(11,i.getPhoneNumber());
+		        pst.executeUpdate();		        	
+		    }
+		catch(SQLException e){
+			System.out.println(i.getStudentName()+"'s records are not added successfully!!!\nBecause of "+e.getMessage());
+			studentDetails.remove(i);
+			return studentDetails;
+		    }
+		catch (ClassNotFoundException e) {
+			System.out.println(e.getMessage());
+			return studentDetails;			
+		    }
+		    
+		finally{
+			try{
+				con.close();
+			}
+			catch(Exception e){
+		        		
+			}
+		}
+		    }
+		return studentDetails;
+	}
+	
+	public int updateStudentDetails(String updateColumn, String updateValue, String referenceColumn, String referenceValue) {
 
-public class Attendance {
+		int rowsAffected = 0;
+		try{
+            Connection con = DBconnectionManager.getConnection();
+            PreparedStatement pst = con.prepareStatement("update Student set ?? = ? where ?? = ?");
+            pst.setString(1,updateColumn);
+            pst.setString(2,updateValue);
+            pst.setString(3,referenceColumn);
+            pst.setString(4,referenceValue);
+            rowsAffected = pst.executeUpdate();
+            con.close();
+            return rowsAffected;
+            
+        }
+        catch(SQLException e){
+        	System.out.println(e.getMessage());
+        }
+        catch(ClassNotFoundException e){
+        	System.out.println(e.getMessage());
+        }
+		return 0;
+	}
 	
-	private String attendanceId;
-	private String studentId;
-	private String enrollmentId;
-	private int semester;
-	private int toatalWorkingDays;
-	private int presentDays;
-	private int absentDays;
-	private int attendancePercentage;
+	public int deleteStudentDetails(String StudentId) {
+		
+        try{
+            Connection con = DBconnectionManager.getConnection();
+            PreparedStatement pst = con.prepareStatement("delete from Student where Student_Id = ?");
+            pst.setString(1,StudentId);
+            int rowsAffected = pst.executeUpdate();
+            con.close();
+            return rowsAffected;
+        }catch(ClassNotFoundException e){
+        	System.out.println(e.getMessage());
+        }catch(SQLException e){
+        	System.out.println(e.getMessage());
+        }
+		return 0;
+	}
 	
-	public Attendance() {
-		super();
-	}
-	public Attendance(String attendanceId, String studentId, String enrollmentId, int semester, int toatalWorkingDays,
-			int presentDays, int absentDays, int attendancePercentage) {
-		super();
-		this.attendanceId = attendanceId;
-		this.studentId = studentId;
-		this.enrollmentId = enrollmentId;
-		this.semester = semester;
-		this.toatalWorkingDays = toatalWorkingDays;
-		this.presentDays = presentDays;
-		this.absentDays = absentDays;
-		this.attendancePercentage = attendancePercentage;
-	}
-	public String getAttendanceId() {
-		return attendanceId;
-	}
-	public void setAttendanceId(String attendanceId) {
-		this.attendanceId = attendanceId;
-	}
-	public String getStudentId() {
-		return studentId;
-	}
-	public void setStudentId(String studentId) {
-		this.studentId = studentId;
-	}
-	public String getEnrollmentId() {
-		return enrollmentId;
-	}
-	public void setEnrollmentId(String enrollmentId) {
-		this.enrollmentId = enrollmentId;
-	}
-	public int getSemester() {
-		return semester;
-	}
-	public void setSemester(int semester) {
-		this.semester = semester;
-	}
-	public int getToatalWorkingDays() {
-		return toatalWorkingDays;
-	}
-	public void setToatalWorkingDays(int toatalWorkingDays) {
-		this.toatalWorkingDays = toatalWorkingDays;
-	}
-	public int getPresentDays() {
-		return presentDays;
-	}
-	public void setPresentDays(int presentDays) {
-		this.presentDays = presentDays;
-	}
-	public int getAbsentDays() {
-		return absentDays;
-	}
-	public void setAbsentDays(int absentDays) {
-		this.absentDays = absentDays;
-	}
-	public int getAttendancePercentage() {
-		return attendancePercentage;
-	}
-	public void setAttendancePercentage(int attendancePercentage) {
-		this.attendancePercentage = attendancePercentage;
+	public ArrayList<Student> selectStudentDetails(){
+
+        ArrayList<Student> list = new ArrayList<Student>();
+        try{
+        Connection con = DBconnectionManager.getConnection();
+        PreparedStatement pst = con.prepareStatement("select * from Student ");
+        ResultSet rs = pst.executeQuery();
+        while(rs.next()){
+            Student obj1 = new Student(rs.getString(1),rs.getString(2),rs.getString(3),rs.getDate(4),rs.getInt(5),rs.getInt(6),rs.getInt(7),rs.getInt(8),rs.getString(9),rs.getString(10),rs.getLong(11));
+            list.add(obj1);
+        }
+        con.close();
+        return list;
+        }catch(SQLException e){
+        	return list;
+        }catch(ClassNotFoundException e){
+        	return list;
+        }
 	}
 
 }
