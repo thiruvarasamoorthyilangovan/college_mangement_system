@@ -117,6 +117,13 @@ public class Mark {
 	public Mark() {
 		super();
 	}
+	@Override
+	public String toString() {
+		return "Mark \nMarkId=" + markId + "\n Student Id = " + studentId + "\n semester = " + semester + "\n subject one = "
+				+ subject1 + "\n subject Two = " + subject2 + "\n subject Three = " + subject3 + "\n subject Four = " + subject4
+				+ "\n subject Five = " + subject5 + "\n subject Six = " + subject6 + "\n subject Seven = " + subject7 + "\n subject Eight = "
+				+ subject8 + "\n GPA = " + gpa + "\n CGPA = " + cgpa;
+	}
 	
 
 }
