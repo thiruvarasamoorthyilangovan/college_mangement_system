@@ -28,10 +28,10 @@ public class CourseManagement {
 		    }
 		}
 		catch(SQLException e){
-			return 0;
+			System.out.println(e.getMessage());
 		    }
 		catch (ClassNotFoundException e) {
-		    return 0;			
+		    System.out.println(e.getMessage());
 		    }
 		finally{
 			try{
@@ -57,10 +57,10 @@ public class CourseManagement {
             return rowsAffected;
         }
         catch(SQLException e){
-            e.printStackTrace();
+        	System.out.println(e.getMessage());
         }
         catch(ClassNotFoundException e){
-        	e.printStackTrace();
+        	System.out.println(e.getMessage());
         }
 		return 0;
 	}
@@ -74,33 +74,32 @@ public class CourseManagement {
             con.close();
             return rowsAffected;
         }catch(ClassNotFoundException e){
-            e.printStackTrace();
+            System.out.println(e.getMessage());
         }catch(SQLException e){
-            e.printStackTrace();
+        	System.out.println(e.getMessage());
         }
 		return 0;
 	}
 	
-	public ArrayList<Course> selectCourseDetails(){
+	public ArrayList<Course> selectCourseDetails(String courseId){
 		
 		ArrayList<Course> list = new ArrayList<Course>();
         try{
         Connection con = DBconnectionManager.getConnection();
-        PreparedStatement pst = con.prepareStatement("select * from Course ");
+        PreparedStatement pst = con.prepareStatement("select * from Course where COURSE_ID = ?");
+        pst.setString(1, courseId);
         ResultSet rs = pst.executeQuery();
         while(rs.next()){
         	Course obj1 = new Course(rs.getString(1),rs.getString(2),rs.getString(3),rs.getString(4),rs.getDouble(5));
             list.add(obj1);
         }
         con.close();
-        	return list;
         }catch(SQLException e){
-            e.printStackTrace();
-            return list;
+        	System.out.println(e.getMessage());
         }catch(ClassNotFoundException e){
-            e.printStackTrace();
-            return list;
+        	System.out.println(e.getMessage());
         }
+        return list;
 	}
 
 }
