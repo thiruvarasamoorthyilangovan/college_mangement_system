@@ -43,7 +43,7 @@ public class UserInterface {
 						System.out.println("Enter the Student Name to be Update");
 						s.nextLine();
 						String studentName = s.nextLine();
-						boolean flag = ss.modifyStudent("STUDENT-NAME",studentName,"STUDENT-ID",studentId );
+						boolean flag = ss.modifyStudent("STUDENT_NAME",studentName,"STUDENT_ID",studentId );
 						if(flag) {
 							System.out.println(studentId+" details Updated successfully");
 						}
