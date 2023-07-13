@@ -34,11 +34,11 @@ public class CourseService {
     	return (n>0);
     }
     
-    public List<Course> fetchCourseDetails(String studentId){
+    public List<Course> fetchCourseDetails(String coursetId){
     	
     	List<Course> courseDetailList = new ArrayList<Course>();
     	CourseManagement obj = new CourseManagement();
-    	courseDetailList = obj.selectCourseDetails();
+    	courseDetailList = obj.selectCourseDetails(coursetId);
     	return courseDetailList;
     }
  
