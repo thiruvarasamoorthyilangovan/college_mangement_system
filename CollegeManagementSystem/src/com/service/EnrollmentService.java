@@ -14,7 +14,7 @@ public class EnrollmentService {
 		String DELIMETER = ":";
 		for(String i : enrollmentDetails) {
 			String arr[] = i.split(DELIMETER);
-			Enrollment obj = new Enrollment(arr[0],arr[1],arr[2],arr[3]);
+			Enrollment obj = new Enrollment(arr[0],arr[1],arr[2]);
 			enrollmentDetailList.add(obj);
 		}
     	return enrollmentDetailList;
