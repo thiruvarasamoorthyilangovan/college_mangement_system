@@ -55,11 +55,9 @@ public class StudentManagement {
 		int rowsAffected = 0;
 		try{
             Connection con = DBconnectionManager.getConnection();
-            PreparedStatement pst = con.prepareStatement("update Student set ?? = ? where ?? = ?");
-            pst.setString(1,updateColumn);
-            pst.setString(2,updateValue);
-            pst.setString(3,referenceColumn);
-            pst.setString(4,referenceValue);
+            PreparedStatement pst = con.prepareStatement("update Student set "+updateColumn+" = ? where "+referenceColumn+" = ?");
+            pst.setString(1,updateValue);
+            pst.setString(2,referenceValue);
             rowsAffected = pst.executeUpdate();
             con.close();
             return rowsAffected;
