@@ -16,7 +16,7 @@ public int insertEnrollmentDetails(List<Enrollment> enrollmentDetails) {
 	Connection con = null;
 	try{
 	    con = DBconnectionManager.getConnection();
-	    PreparedStatement pst = con.prepareStatement("INSERT INTO ENROLLMENT VALUES(?,?,?,?)");
+	    PreparedStatement pst = con.prepareStatement("INSERT INTO ENROLLMENT (ENROLLMENT_ID,STUDENT_ID,COURSE_ID,FEE_STATUS) VALUES (?,?,?,?)");
 	    for(Enrollment i:enrollmentDetails){
 	        pst.setString(1,i.getEnrollmentId());
 	        pst.setString(2,i.getStudentId());
@@ -44,14 +44,14 @@ public int insertEnrollmentDetails(List<Enrollment> enrollmentDetails) {
 	return recordsAdded;
 	}
 	
-	public int updateEnrollmentDetails(String feeStatus,String enrollmentId) {
+	public int updateEnrollmentDetails(String updateColumn,String updateValue,String referenceColumn,String referenceValue) {
 		
 		int rowsAffected = 0;
 		try{
             Connection con = DBconnectionManager.getConnection();
-            PreparedStatement pst = con.prepareStatement("update ENROLLMENT set FEE_STATUS = ? where ENROLLMENT_ID = ?");
-            pst.setString(2,enrollmentId);
-            pst.setString(1,feeStatus);
+            String query = "update ENROLLMENT set "+updateColumn+" = '"+updateValue+"' where "+referenceColumn+" = '"+referenceValue+"'";
+            PreparedStatement pst = con.prepareStatement(query);
+
             rowsAffected = pst.executeUpdate();
             con.close();
             return rowsAffected;
@@ -86,11 +86,11 @@ public int insertEnrollmentDetails(List<Enrollment> enrollmentDetails) {
 		ArrayList<Enrollment> list = new ArrayList<Enrollment>();
         try{
         Connection con = DBconnectionManager.getConnection();
-        PreparedStatement pst = con.prepareStatement("select * from ENROLLMENT WHERE ENROLLMENT-ID=?");
+        PreparedStatement pst = con.prepareStatement("select * from ENROLLMENT WHERE ENROLLMENT_ID=?");
         pst.setString(1,enrollmentId);
         ResultSet rs = pst.executeQuery();
         while(rs.next()){
-        	Enrollment obj1 = new Enrollment(rs.getString(1),rs.getString(2),rs.getString(3),rs.getString(4));
+        	Enrollment obj1 = new Enrollment(rs.getString(1),rs.getString(2),rs.getString(3));
             list.add(obj1);
         }
         con.close();
