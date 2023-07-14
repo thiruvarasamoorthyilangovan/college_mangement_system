@@ -63,7 +63,7 @@ public class StudentService {
     	
     	List<Student> studentDetailList = new ArrayList<Student>();
     	StudentManagement obj=new StudentManagement();
-    	studentDetailList = obj.selectStudentDetails();
+    	studentDetailList = obj.selectStudentDetails(studentId);
     	return studentDetailList;
     }
     
