@@ -21,7 +21,7 @@ public class UserInterface {
 			if(choice == 1) {
 				int choice1=0;
 				do {
-					System.out.println("Enter your choice\n1. Add Student Details\n2. Update Student Details\n3. Slow Student Details\n4. Delete Student Details\n5. Go to main menu");
+					System.out.println("Enter your choice\n1. Add Student Details\n2. Update Student Details\n3. Show Student Details\n4. Delete Student Details\n5. Go to main menu");
 					choice1 = s.nextInt();
 					if(choice1==1) {
 						System.out.println("Enter the Number Records to be Add");
@@ -37,18 +37,89 @@ public class UserInterface {
 						}
 					}
 					else if(choice1==2) {
-						System.out.println("Enter the choice to be update\n1.studetname");
-						System.out.println("Enter the Student to be Update");
-						String studentId = s.next();
-						System.out.println("Enter the Student Name to be Update");
+						System.out.println("Enter the choice which column to be update\n1.studetname\n2. Date of Brith\n3. Year of Study\n4. Year f Joining\n5. Tenth Grade Mark\n6. Twelth Grade Mark\n7. First Graduate\n8. Email Id\n9. Phone Number");
+						int n = s.nextInt();
+						String updateColumn ="";
+						switch(n) {
+						case(1):
+							updateColumn="STUDENT_NAME";
+							break;
+						case(2):
+							updateColumn="DOB";
+							break;
+						case(3):
+							updateColumn="YEAR_OF_STUDY";
+							break;
+						case(4):
+							updateColumn="YEAR_OF_JOINING";
+							break;
+						case(5):
+							updateColumn="TENTH_GRADE_MARK";
+							break;
+						case(6):
+							updateColumn="TWELTH_GRADE_MARK";
+							break;
+						case(7):
+							updateColumn="FIRST_GRADUATE";
+							break;
+						case(8):
+							updateColumn="EMAIL_ID";
+							break;
+						case(9):
+							updateColumn="PHONE_NUMBER";
+							break;
+						}
+						
+						System.out.println("Enter the "+updateColumn+" detail");
 						s.nextLine();
-						String studentName = s.nextLine();
-						boolean flag = ss.modifyStudent("STUDENT_NAME",studentName,"STUDENT_ID",studentId );
+						String updateValue = s.nextLine();
+						System.out.println("Enter the choice which column to be update\n1. Admmission Id\n2. Student Id\n3. Studet Name\n4. Date of Brith\n5. Year of Study\n6. Year 0f Joining\n7. Tenth Grade Mark\n8. Twelth Grade Mark\n9. First Graduate\n10. Email Id\n11. Phone Number");
+						n = s.nextInt();
+						String referenceColumn ="";
+						switch(n) {
+						case(1):
+							referenceColumn="ADMISSION_NUMBER";
+							break;
+						case(2):
+							referenceColumn="STUDENT_ID";
+							break;
+						case(3):
+							referenceColumn="STUDENT_NAME";
+							break;
+						case(4):
+							referenceColumn="DOB";
+							break;
+						case(5):
+							referenceColumn="YEAR_OF_STUDY";
+							break;
+						case(6):
+							referenceColumn="YEAR_OF_JOINING";
+							break;
+						case(7):
+							referenceColumn="TENTH_GRADE_MARK";
+							break;
+						case(8):
+							referenceColumn="TWELTH_GRADE_MARK";
+							break;
+						case(9):
+							referenceColumn="FIRST_GRADUATE";
+							break;
+						case(10):
+							referenceColumn="EMAIL_ID";
+							break;
+						case(11):
+							referenceColumn="PHONE_NUMBER";
+							break;
+						}
+						System.out.println("Enter the "+referenceColumn+" detail");
+						s.nextLine();
+						String referenceValue = s.nextLine();
+						boolean flag = ss.modifyStudent(updateColumn,updateValue,referenceColumn,referenceValue );
 						if(flag) {
-							System.out.println(studentId+" details Updated successfully");
+							System.out.println("Details are Updated successfully");
 						}
 						else {
-							System.out.println(studentId+" details not Updated successfully");
+							System.out.println("Details are not Updated successfully");
 						}
 					}
 					else if(choice1==3) {
@@ -100,16 +171,56 @@ public class UserInterface {
 						System.out.println(recordAdded+" Course record added successfully");
 					}
 					else if(choice1==2) {
-						System.out.println("Enter the Course Id to be Update");
-						String courseId = s.next();
-						System.out.println("Enter the Student Name to be Update");
-						String courseName = s.next();
-						boolean flag = cs.modifyCourse(courseId, courseName);
+						System.out.println("Enter the choice which column to be update\n1. Course Name\n2. Course Coordinator\n3. Department\n4. Course Fee");
+						int n = s.nextInt();
+						String updateColumn ="";
+						switch(n) {
+						case(1):
+							updateColumn="COURSE_NAME";
+							break;
+						case(2):
+							updateColumn="COURSE_COORDINATOR";
+							break;
+						case(3):
+							updateColumn="DEPARTMENT";
+							break;
+						case(4):
+							updateColumn="COURSE_FEE";
+							break;
+						
+						}
+						System.out.println("Enter the "+updateColumn+" detail");
+						s.nextLine();
+						String updateValue = s.nextLine();
+						System.out.println("Enter the choice which column to be update\n1. Course Id\n2. Course Name\n3. Course Coordinator\n4. Department\n5. Course Fee");
+						n = s.nextInt();
+						String referenceColumn ="";
+						switch(n) {
+						case(1):
+							referenceColumn="COURSE_ID";
+							break;
+						case(2):
+							referenceColumn="COURSE_NAME";
+							break;
+						case(3):
+							referenceColumn="COURSE_COORDINATOR";
+							break;
+						case(4):
+							referenceColumn="DEPARTMENT";
+							break;
+						case(5):
+							referenceColumn="COURSE_FEE";
+							break;
+						}
+						System.out.println("Enter the "+referenceColumn+" detail");
+						s.nextLine();
+						String referenceValue = s.nextLine();
+						boolean flag = cs.modifyCourse(updateColumn,updateValue,referenceColumn,referenceValue);
 						if(flag) {
-							System.out.println(courseId+" details Updated successfully");
+							System.out.println("Details Updated successfully");
 						}
 						else {
-							System.out.println(courseId+" details not Updated successfully");
+							System.out.println("Details not Updated successfully");
 						}
 						
 					}
@@ -140,7 +251,7 @@ public class UserInterface {
 					else {
 						System.out.println("Invalid input");
 					}
-				}while(choice1 == 0);
+				}while(choice1 != 5);
 			}else if(choice == 3) {
 				int choice1=0;
 				do {
@@ -158,16 +269,46 @@ public class UserInterface {
 						System.out.println(recordAdded+" Enrollment record added successfully");
 					}
 					else if(choice1==2) {
-						System.out.println("Enter the Enrollment Id to be Update");
-						String enrollmentId = s.next();
-						System.out.println("Enter the Student Name to be Update");
-						String enrollmentName = s.next();
-						boolean flag = cs.modifyCourse(enrollmentId, enrollmentName);
+						System.out.println("Enter the choice which column to be update\n1. Student Id\n2. Course Id\n3. Fee Status");
+						int n = s.nextInt();
+						String updateColumn ="";
+						switch(n) {
+						case(1):
+							updateColumn="STUDENT_ID";
+							break;
+						case(2):
+							updateColumn="COURSE_ID";
+							break;
+						case(3):
+							updateColumn="FEE_STATUS";
+							break;
+						}
+						System.out.println("Enter the "+updateColumn+" detail");
+						s.nextLine();
+						String updateValue = s.nextLine();
+						System.out.println("Enter the choice which column to be update\n1. Enrollment Id\n2. Student Id\n3. Course Id");
+						n = s.nextInt();
+						String referenceColumn ="";
+						switch(n) {
+						case(1):
+							referenceColumn="ENROLLMENT_ID";
+							break;
+						case(2):
+							referenceColumn="STUDENT_ID";
+							break;
+						case(3):
+							referenceColumn="COURSE_ID";
+							break;
+						}
+						System.out.println("Enter the "+referenceColumn+" detail");
+						s.nextLine();
+						String referenceValue = s.nextLine();
+						boolean flag = es.modifyEnrollment(updateColumn, updateValue, referenceColumn, referenceValue);
 						if(flag) {
-							System.out.println(enrollmentId+" details Updated successfully");
+							System.out.println("Details Updated successfully");
 						}
 						else {
-							System.out.println(enrollmentId+" details not Updated successfully");
+							System.out.println("Details not Updated successfully");
 						}
 						
 					}
@@ -198,7 +339,7 @@ public class UserInterface {
 					else {
 						System.out.println("Invalid input");
 					}
-				}while(choice1 == 0);
+				}while(choice1 != 5);
 			}
 			
 	}while(choice!=7);
