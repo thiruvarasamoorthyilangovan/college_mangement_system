@@ -55,9 +55,8 @@ public class StudentManagement {
 		int rowsAffected = 0;
 		try{
             Connection con = DBconnectionManager.getConnection();
-            PreparedStatement pst = con.prepareStatement("update Student set "+updateColumn+" = ? where "+referenceColumn+" = ?");
-            pst.setString(1,updateValue);
-            pst.setString(2,referenceValue);
+            String query = "update Student set "+updateColumn+" = '"+updateValue+"' where "+referenceColumn+" = '"+referenceValue+"'";
+            PreparedStatement pst = con.prepareStatement(query);
             rowsAffected = pst.executeUpdate();
             con.close();
             return rowsAffected;
@@ -89,12 +88,13 @@ public class StudentManagement {
 		return 0;
 	}
 	
-	public ArrayList<Student> selectStudentDetails(){
+	public ArrayList<Student> selectStudentDetails(String studentId){
 
         ArrayList<Student> list = new ArrayList<Student>();
         try{
         Connection con = DBconnectionManager.getConnection();
-        PreparedStatement pst = con.prepareStatement("select * from Student ");
+        PreparedStatement pst = con.prepareStatement("select * from Student WHERE STUDENT_ID = ?");
+        pst.setString(1, studentId);
         ResultSet rs = pst.executeQuery();
         while(rs.next()){
             Student obj1 = new Student(rs.getString(1),rs.getString(2),rs.getString(3),rs.getDate(4),rs.getInt(5),rs.getInt(6),rs.getInt(7),rs.getInt(8),rs.getString(9),rs.getString(10),rs.getLong(11));
