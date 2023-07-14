@@ -27,10 +27,10 @@ public class CourseService {
     	return result;
     }
     
-    public boolean modifyCourse(String courseId, String courseName) {
+    public boolean modifyCourse(String updateColumn, String updateValue, String referenceColumn,String referenceValue) {
     	
     	CourseManagement obj = new CourseManagement();
-    	int n = obj.updateCourseDetails(courseId, courseName);
+    	int n = obj.updateCourseDetails(updateColumn,updateValue,referenceColumn,referenceValue);
     	return (n>0);
     }
     
@@ -46,6 +46,6 @@ public class CourseService {
     	
 		CourseManagement obj=new CourseManagement();
     	int n = obj.deleteCourseDetails(courseId);
-    	return (n<0);
+    	return (n>0);
     }
 }
