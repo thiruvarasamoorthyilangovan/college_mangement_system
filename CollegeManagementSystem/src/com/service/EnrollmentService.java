@@ -27,10 +27,10 @@ public class EnrollmentService {
     	return result;
     }
     
-    public boolean modifyEnrollment(String EnrollmentId, String EnrollmentName) {
+    public boolean modifyEnrollment(String updateColumn,String updateValue,String referenceColumn,String referenceValue) {
     	
     	EnrollmentManagement obj = new EnrollmentManagement();
-    	int n = obj.updateEnrollmentDetails(EnrollmentId, EnrollmentName);
+    	int n = obj.updateEnrollmentDetails(updateColumn, updateValue, referenceColumn, referenceValue);
     	return (n>0);
     }
     
@@ -46,6 +46,6 @@ public class EnrollmentService {
     	
     	EnrollmentManagement obj=new EnrollmentManagement();
     	int n = obj.deleteEnrollmentDetails(EnrollmentId);
-    	return (n<0);
+    	return (n>0);
     }
 }
