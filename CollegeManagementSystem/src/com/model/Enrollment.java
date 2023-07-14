@@ -50,7 +50,7 @@ public class Enrollment {
 
 	@Override
 	public String toString() {
-		return "Enrollment EnrollmentId = " + enrollmentId + "\n Student Id = " + studentId + "\n Course Id = " + courseId
+		return "Enrollment \n EnrollmentId = " + enrollmentId + "\n Student Id = " + studentId + "\n Course Id = " + courseId
 				+ "\n Fee Status = " + feeStatus;
 	}
 
@@ -60,6 +60,13 @@ public class Enrollment {
 	}
 
 
+	public Enrollment(String enrollmentId, String studentId, String courseId) {
+		super();
+		this.enrollmentId = enrollmentId;
+		this.studentId = studentId;
+		this.courseId = courseId;
+		this.feeStatus = "Not Paid";
+	}
 	public Enrollment(String enrollmentId, String studentId, String courseId, String feeStatus) {
 		super();
 		this.enrollmentId = enrollmentId;
