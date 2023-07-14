@@ -44,14 +44,13 @@ public class CourseManagement {
 		return recordsAdded;
 	}
 	
-	public int updateCourseDetails(String courseId, String courseName) {
+	public int updateCourseDetails(String updateColumn, String updateValue, String referenceColumn,String referenceValue) {
 		
 		int rowsAffected = 0;
 		try{
             Connection con = DBconnectionManager.getConnection();
-            PreparedStatement pst = con.prepareStatement("update Course set Course_Name = ? where Course_Id = ?");
-            pst.setString(2,courseId);
-            pst.setString(1,courseName);
+            String query = "update Course set "+updateColumn+" = '"+updateValue+"' where "+referenceColumn+" = '"+referenceValue+"'";
+            PreparedStatement pst = con.prepareStatement(query);
             rowsAffected = pst.executeUpdate();
             con.close();
             return rowsAffected;
